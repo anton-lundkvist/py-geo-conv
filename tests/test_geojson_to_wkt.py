@@ -10,7 +10,7 @@ class TestGeojsonToWkt(unittest.TestCase):
 
     def setUp(self) -> None:
         p = Path(ROOT_DIR,"tests","data","wkt-to-geojson.json")
-        with open() as f:
+        with open(p) as f:
             self.testdata = json.loads(f.read())
             self.log = False
 
