@@ -7,7 +7,7 @@ import pygeoconv
 class TestWktToGeojson(unittest.TestCase):
 
     def setUp(self) -> None:
-        with open("data/wkt-to-geojson.json") as f:
+        with open("./data/wkt-to-geojson.json") as f:
             self.testdata = json.loads(f.read())
             self.log = False
 
