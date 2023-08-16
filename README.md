@@ -1,8 +1,8 @@
-# AIRaster-PythonGeometryConversion
+# Py-geo-conv
 
-Python paket för konvertering av geometrier mellan WKT, GeoJSON och EsriJSON
+Convert between ArcGis Json(https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , WKT(https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and GeoJson(https://geojson.org/)
 
-## Användning
+## Usage
 Kod för konvertering finns i mappen `geometry_conversion` och importeras genom
 ```
 import geometry_conversion.geom_converter as converter
