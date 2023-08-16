@@ -1,6 +1,7 @@
 # Py-geo-conv
 
-Convert between ArcGis Json(https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , WKT(https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and GeoJson(https://geojson.org/)
+Convert between [ArcGis Json](https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and [GeoJson](https://geojson.org/)
+using pure python (no dependencies)
 
 ## Usage
 Kod för konvertering finns i mappen `geometry_conversion` och importeras genom
