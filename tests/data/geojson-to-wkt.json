@@ -1,0 +1,857 @@
+{
+  "point": {
+    "geojson": {
+      "type": "Point",
+      "coordinates": [
+        30,
+        10
+      ]
+    },
+    "wkt": "POINT (30 10)"
+  },
+  "pointZ": {
+    "geojson": {
+      "type": "Point",
+      "coordinates": [
+        30,
+        10,
+        10
+      ]
+    },
+    "wkt": "POINT Z (30 10 10)"
+  },
+  "pointMNonStandard": {
+    "geojson": {
+      "properties": {
+        "m": true
+      },
+      "type": "Point",
+      "coordinates": [
+        30,
+        10,
+        10
+      ]
+    },
+    "wkt": "POINT M (30 10 10)"
+  },
+  "pointZM": {
+    "geojson": {
+      "type": "Point",
+      "coordinates": [
+        30,
+        10,
+        10,
+        12
+      ]
+    },
+    "wkt": "POINT ZM (30 10 10 12)"
+  },
+  "pointEmpty": {
+    "geojson": {
+      "type": "Point",
+      "coordinates": []
+    },
+    "wkt": "POINT EMPTY"
+  },
+  "polygon": {
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            30,
+            10
+          ],
+          [
+            20,
+            20
+          ],
+          [
+            30,
+            20
+          ]
+        ]
+      ]
+    },
+    "wkt": "POLYGON ((30 10, 20 20, 30 20))"
+  },
+  "polygonZ": {
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            30,
+            10,
+            1
+          ],
+          [
+            20,
+            20,
+            2
+          ],
+          [
+            30,
+            20,
+            3
+          ]
+        ]
+      ]
+    },
+    "wkt": "POLYGON Z ((30 10 1, 20 20 2, 30 20 3))"
+  },
+  "polygonZM": {
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            30,
+            10,
+            1,
+            3
+          ],
+          [
+            20,
+            20,
+            2,
+            2
+          ],
+          [
+            30,
+            20,
+            3,
+            1
+          ]
+        ]
+      ]
+    },
+    "wkt": "POLYGON ZM ((30 10 1 3, 20 20 2 2, 30 20 3 1))"
+  },
+  "polygonMNonStandard": {
+    "geojson": {
+      "properties": {
+        "m": true
+      },
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            30,
+            10,
+            1
+          ],
+          [
+            20,
+            20,
+            2
+          ],
+          [
+            30,
+            20,
+            3
+          ]
+        ]
+      ]
+    },
+    "wkt": "POLYGON M ((30 10 1, 20 20 2, 30 20 3))"
+  },
+  "polygonEmpty": {
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": []
+    },
+    "wkt": "POLYGON EMPTY"
+  },
+  "multipoint": {
+    "geojson": {
+      "type": "MultiPoint",
+      "coordinates": [
+        [
+          30,
+          10
+        ],
+        [
+          20,
+          20
+        ],
+        [
+          30,
+          20
+        ]
+      ]
+    },
+    "wkt": "MULTIPOINT (30 10, 20 20, 30 20)"
+  },
+  "multipointZ": {
+    "geojson": {
+      "type": "MultiPoint",
+      "coordinates": [
+        [
+          30,
+          10,
+          1
+        ],
+        [
+          20,
+          20,
+          2
+        ],
+        [
+          30,
+          20,
+          3
+        ]
+      ]
+    },
+    "wkt": "MULTIPOINT Z (30 10 1, 20 20 2, 30 20 3)"
+  },
+  "multipointZM": {
+    "geojson": {
+      "type": "MultiPoint",
+      "coordinates": [
+        [
+          30,
+          10,
+          1,
+          2
+        ],
+        [
+          20,
+          20,
+          3,
+          4
+        ],
+        [
+          30,
+          20,
+          5,
+          6
+        ]
+      ]
+    },
+    "wkt": "MULTIPOINT ZM (30 10 1 2, 20 20 3 4, 30 20 5 6)"
+  },
+  "multipointMNonStandard": {
+    "geojson": {
+      "properties": {
+        "m": true
+      },
+      "type": "MultiPoint",
+      "coordinates": [
+        [
+          30,
+          10,
+          1
+        ],
+        [
+          20,
+          20,
+          2
+        ],
+        [
+          30,
+          20,
+          3
+        ]
+      ]
+    },
+    "wkt": "MULTIPOINT M (30 10 1, 20 20 2, 30 20 3)"
+  },
+  "multipointEmpty": {
+    "geojson": {
+      "type": "MultiPoint",
+      "coordinates": []
+    },
+    "wkt": "MULTIPOINT EMPTY"
+  },
+  "linestringZ": {
+    "geojson": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          30,
+          10,
+          2
+        ],
+        [
+          20,
+          20,
+          1
+        ],
+        [
+          30,
+          20,
+          0
+        ]
+      ]
+    },
+    "wkt": "LINESTRING Z (30 10 2, 20 20 1, 30 20 0)"
+  },
+  "linestringZM": {
+    "geojson": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          30,
+          10,
+          1,
+          2
+        ],
+        [
+          20,
+          20,
+          3,
+          4
+        ],
+        [
+          30,
+          20,
+          5,
+          6
+        ]
+      ]
+    },
+    "wkt": "LINESTRING ZM (30 10 1 2, 20 20 3 4, 30 20 5 6)"
+  },
+  "linestringMNonStandard": {
+    "geojson": {
+      "properties": {
+        "m": true
+      },
+      "type": "LineString",
+      "coordinates": [
+        [
+          30,
+          10,
+          1
+        ],
+        [
+          20,
+          20,
+          2
+        ],
+        [
+          30,
+          20,
+          3
+        ]
+      ]
+    },
+    "wkt": "LINESTRING M (30 10 1, 20 20 2, 30 20 3)"
+  },
+  "linestringEmpty": {
+    "geojson": {
+      "type": "LineString",
+      "coordinates": []
+    },
+    "wkt": "LINESTRING EMPTY"
+  },
+  "linestring": {
+    "geojson": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          30,
+          10
+        ],
+        [
+          20,
+          20
+        ],
+        [
+          30,
+          20
+        ]
+      ]
+    },
+    "wkt": "LINESTRING (30 10, 20 20, 30 20)"
+  },
+  "multilinestring": {
+    "geojson": {
+      "type": "MultiLineString",
+      "coordinates": [
+        [
+          [
+            30,
+            10
+          ],
+          [
+            20,
+            20
+          ],
+          [
+            30,
+            20
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTILINESTRING ((30 10, 20 20, 30 20))"
+  },
+  "multilinestringZ": {
+    "geojson": {
+      "type": "MultiLineString",
+      "coordinates": [
+        [
+          [
+            30,
+            10,
+            1
+          ],
+          [
+            20,
+            20,
+            2
+          ],
+          [
+            30,
+            20,
+            3
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTILINESTRING Z ((30 10 1, 20 20 2, 30 20 3))"
+  },
+  "multilinestringZM": {
+    "geojson": {
+      "type": "MultiLineString",
+      "coordinates": [
+        [
+          [
+            30,
+            10,
+            1,
+            2
+          ],
+          [
+            20,
+            20,
+            3,
+            4
+          ],
+          [
+            30,
+            20,
+            5,
+            6
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTILINESTRING ZM ((30 10 1 2, 20 20 3 4, 30 20 5 6))"
+  },
+  "multilinestringMNonStandard": {
+    "geojson": {
+      "properties": {
+        "m": true
+      },
+      "type": "MultiLineString",
+      "coordinates": [
+        [
+          [
+            30,
+            10,
+            1
+          ],
+          [
+            20,
+            20,
+            2
+          ],
+          [
+            30,
+            20,
+            3
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTILINESTRING M ((30 10 1, 20 20 2, 30 20 3))"
+  },
+  "multilinestringEmpty": {
+    "geojson": {
+      "type": "MultiLineString",
+      "coordinates": []
+    },
+    "wkt": "MULTILINESTRING EMPTY"
+  },
+  "multipolygon": {
+    "geojson": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              102.0,
+              2.0
+            ],
+            [
+              103.0,
+              2.0
+            ],
+            [
+              103.0,
+              3.0
+            ],
+            [
+              102.0,
+              3.0
+            ],
+            [
+              102.0,
+              2.0
+            ]
+          ]
+        ],
+        [
+          [
+            [
+              100.0,
+              0.0
+            ],
+            [
+              101.0,
+              0.0
+            ],
+            [
+              101.0,
+              1.0
+            ],
+            [
+              100.0,
+              1.0
+            ],
+            [
+              100.0,
+              0.0
+            ]
+          ],
+          [
+            [
+              100.2,
+              0.2
+            ],
+            [
+              100.8,
+              0.2
+            ],
+            [
+              100.8,
+              0.8
+            ],
+            [
+              100.2,
+              0.8
+            ],
+            [
+              100.2,
+              0.2
+            ]
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTIPOLYGON (((102.0 2.0, 103.0 2.0, 103.0 3.0, 102.0 3.0, 102.0 2.0)), ((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 1.0, 100.0 0.0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))"
+  },
+  "multipolygonZ": {
+    "geojson": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              102.0,
+              2.0,
+              1
+            ],
+            [
+              103.0,
+              2.0,
+              2
+            ],
+            [
+              103.0,
+              3.0,
+              3
+            ],
+            [
+              102.0,
+              3.0,
+              4
+            ],
+            [
+              102.0,
+              2.0,
+              5
+            ]
+          ]
+        ],
+        [
+          [
+            [
+              100.0,
+              0.0
+            ],
+            [
+              101.0,
+              0.0
+            ],
+            [
+              101.0,
+              1.0
+            ],
+            [
+              100.0,
+              1.0
+            ],
+            [
+              100.0,
+              0.0
+            ]
+          ],
+          [
+            [
+              100.2,
+              0.2
+            ],
+            [
+              100.8,
+              0.2
+            ],
+            [
+              100.8,
+              0.8
+            ],
+            [
+              100.2,
+              0.8
+            ],
+            [
+              100.2,
+              0.2
+            ]
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTIPOLYGON Z (((102.0 2.0 1, 103.0 2.0 2, 103.0 3.0 3, 102.0 3.0 4, 102.0 2.0 5)), ((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 1.0, 100.0 0.0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))"
+  },
+  "multipolygonZM": {
+    "geojson": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              102.0,
+              2.0,
+              1,
+              2
+            ],
+            [
+              103.0,
+              2.0,
+              3,
+              4
+            ],
+            [
+              103.0,
+              3.0,
+              5,
+              6
+            ],
+            [
+              102.0,
+              3.0,
+              7,
+              8
+            ],
+            [
+              102.0,
+              2.0,
+              9,
+              10
+            ]
+          ]
+        ],
+        [
+          [
+            [
+              100.0,
+              0.0
+            ],
+            [
+              101.0,
+              0.0
+            ],
+            [
+              101.0,
+              1.0
+            ],
+            [
+              100.0,
+              1.0
+            ],
+            [
+              100.0,
+              0.0
+            ]
+          ],
+          [
+            [
+              100.2,
+              0.2
+            ],
+            [
+              100.8,
+              0.2
+            ],
+            [
+              100.8,
+              0.8
+            ],
+            [
+              100.2,
+              0.8
+            ],
+            [
+              100.2,
+              0.2
+            ]
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTIPOLYGON ZM (((102.0 2.0 1 2, 103.0 2.0 3 4, 103.0 3.0 5 6, 102.0 3.0 7 8, 102.0 2.0 9 10)), ((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 1.0, 100.0 0.0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))"
+  },
+  "multipolygonMNonStandard": {
+    "geojson": {
+      "type": "MultiPolygon",
+      "properties": {
+        "m": true
+      },
+      "coordinates": [
+        [
+          [
+            [
+              102.0,
+              2.0,
+              1.0
+            ],
+            [
+              103.0,
+              2.0,
+              2.0
+            ],
+            [
+              103.0,
+              3.0,
+              3.0
+            ],
+            [
+              102.0,
+              3.0,
+              4.0
+            ],
+            [
+              102.0,
+              2.0,
+              5.0
+            ]
+          ]
+        ],
+        [
+          [
+            [
+              100.0,
+              0.0
+            ],
+            [
+              101.0,
+              0.0
+            ],
+            [
+              101.0,
+              1.0
+            ],
+            [
+              100.0,
+              1.0
+            ],
+            [
+              100.0,
+              0.0
+            ]
+          ],
+          [
+            [
+              100.2,
+              0.2
+            ],
+            [
+              100.8,
+              0.2
+            ],
+            [
+              100.8,
+              0.8
+            ],
+            [
+              100.2,
+              0.8
+            ],
+            [
+              100.2,
+              0.2
+            ]
+          ]
+        ]
+      ]
+    },
+    "wkt": "MULTIPOLYGON M (((102.0 2.0 1.0, 103.0 2.0 2.0, 103.0 3.0 3.0, 102.0 3.0 4.0, 102.0 2.0 5.0)), ((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 1.0, 100.0 0.0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))"
+  },
+  "multipolygonEmpty": {
+    "geojson": {
+      "type": "MultiPolygon",
+      "coordinates": []
+    },
+    "wkt": "MULTIPOLYGON EMPTY"
+  },
+  "geometrycollection": {
+    "geojson": {
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Point",
+          "coordinates": [
+            100.0,
+            0.0
+          ]
+        },
+        {
+          "type": "LineString",
+          "coordinates": [
+            [
+              101.0,
+              0.0
+            ],
+            [
+              102.0,
+              1.0
+            ]
+          ]
+        }
+      ]
+    },
+    "wkt": "GEOMETRYCOLLECTION(POINT (100.0 0.0), LINESTRING (101.0 0.0, 102.0 1.0))"
+  },
+  "unknownType": {
+    "geojson": {
+      "type": "MultiPolygonLikeThingy",
+      "coordinates": []
+    },
+    "wkt": "Unknown Type: MultiPolygonLikeThingy"
+  }
+}
