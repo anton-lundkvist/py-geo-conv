@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="cf-remote",
+    name="pygeoconv",
     version="1.0",
     author="Anton Lundkvist",
     author_email="antonlundkvist@gmail.com",
