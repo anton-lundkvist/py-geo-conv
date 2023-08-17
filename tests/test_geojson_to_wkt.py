@@ -3,13 +3,12 @@ from pathlib import Path
 import unittest
 
 import pygeoconv
-from utils import ROOT_DIR
 
 
 class TestGeojsonToWkt(unittest.TestCase):
 
     def setUp(self) -> None:
-        p = Path(ROOT_DIR,"tests","data","geojson-to-wkt.json")
+        p = Path(__file__).parent / "data" / "geojson-to-wkt.json"
         with open(p) as f:
             self.testdata = json.loads(f.read())
             self.log = False
