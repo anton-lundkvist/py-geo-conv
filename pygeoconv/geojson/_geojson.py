@@ -1,6 +1,3 @@
-from pygeoconv._common import _shallow_clone, _orient_rings, _flatten_multi_polygon_rings
-
-
 def geojson_to_arcgis(geojson, id_attribute='OBJECTID', wkid: int = 4326):
     result = {}
 
@@ -101,3 +98,60 @@ def parse_geometry_collection(geojson: dict, id_attribute: str, wkid: int):
     for geometry in geojson['geometries']:
         result.append(geojson_to_arcgis(geometry, id_attribute, wkid))
     return result
+
+
+def _shallow_clone(obj):
+    target = {}
+    for key, value in obj.items():
+        target[key] = value
+    return target
+
+
+def _flatten_multi_polygon_rings(rings):
+    output = []
+    for i in range(len(rings)):
+        polygon = _orient_rings(rings[i])
+        for x in range(len(polygon) - 1, -1, -1):
+            ring = polygon[x][:]
+            output.append(ring)
+    return output
+
+
+def _orient_rings(poly):
+    output = []
+    polygon = poly[:]
+    outer_ring = _close_ring(polygon.pop(0)[:])
+    if len(outer_ring) >= 4:
+        if not _ring_is_clockwise(outer_ring):
+            outer_ring.reverse()
+        output.append(outer_ring)
+        for i in range(len(polygon)):
+            hole = _close_ring(polygon[i][:])
+            if len(hole) >= 4:
+                if _ring_is_clockwise(hole):
+                    hole.reverse()
+                output.append(hole)
+    return output
+
+
+def _ring_is_clockwise(ring_to_test):
+    total = 0
+    pt1 = ring_to_test[0]
+    for i in range(len(ring_to_test) - 1):
+        pt2 = ring_to_test[i + 1]
+        total += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1])
+        pt1 = pt2
+    return total >= 0
+
+
+def _close_ring(coordinates):
+    if not _points_equal(coordinates[0], coordinates[-1]):
+        coordinates.append(coordinates[0])
+    return coordinates
+
+
+def _points_equal(a, b):
+    for i in range(len(a)):
+        if a[i] != b[i]:
+            return False
+    return True
