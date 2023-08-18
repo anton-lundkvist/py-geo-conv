@@ -1,4 +1,4 @@
-def geojson_to_arcgis(geojson, id_attribute='OBJECTID', wkid: int = 4326):
+def geojson_to_arcgis(geojson, id_attr='OBJECTID', wkid: int = 4326):
     result = {}
 
     if geojson['type'] == 'Point':
@@ -14,11 +14,11 @@ def geojson_to_arcgis(geojson, id_attribute='OBJECTID', wkid: int = 4326):
     elif geojson['type'] == 'MultiPolygon':
         result = parse_multi_polygon(geojson, wkid)
     elif geojson['type'] == 'Feature':
-        result = parse_feature(geojson, id_attribute, wkid)
+        result = parse_feature(geojson, id_attr, wkid)
     elif geojson['type'] == 'FeatureCollection':
-        result = parse_feature_collection(geojson, id_attribute, wkid)
+        result = parse_feature_collection(geojson, id_attr, wkid)
     elif geojson['type'] == 'GeometryCollection':
-        result = parse_geometry_collection(geojson, id_attribute, wkid)
+        result = parse_geometry_collection(geojson, id_attr, wkid)
     return result
 
 

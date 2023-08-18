@@ -586,7 +586,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             }
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, id_attribute='myId', wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(input, id_attr='myId', wkid=4326)
 
         self.assertEqual(output, {
             "geometry": {

@@ -4,28 +4,67 @@ import pygeoconv.esri_json as esri_converter
 
 
 def wkt_to_esri_json(wkt: str, wkid: int):
+    """
+    Convert WKT to Esri Json format and set the spatial reference to the value of wkid
+    wkt: str
+    wkid: int
+    returns a dict
+    """
     geojson = wkt_converter.wkt_to_geojson(wkt)
     arcgis = geojson_converter.geojson_to_arcgis(geojson=geojson, wkid=wkid)
     return arcgis
 
 
 def wkt_to_geojson(wkt_str: str):
+    """
+    Convert WKT to GeoJson format
+    wkt: str
+    returns a dict
+    """
     return wkt_converter.wkt_to_geojson(wkt_str)
 
 
 def esri_json_to_wkt(esri_json: dict):
+    """
+    Convert an Esri Json object to WKT format
+    esri_json: dict
+    returns a string
+    """
     geojson = esri_converter.esri_json_to_geojson(esri_json)
     wkt = wkt_converter.geojson_to_wkt(geojson)
     return wkt
 
 
 def esri_json_to_geojson(esri_json: dict, id_attr=None):
+    """
+    Converts an Esri Json object to GeoJson format. If the input is an Esri Json of type feature with attributes,
+    use the optional id_attr parameter to specify which attribute should be used as id of the output GeoJson feature.
+    If not specified, the conversion expects an attribute with the name FID or OBJECTID to use as id, otherwise the
+    conversion will fail for geometries of type Feature.
+    esri_json: dict
+    id_attr: Optional str
+    returns a dict
+    """
     return esri_converter.esri_json_to_geojson(esri_json, id_attribute=id_attr)
 
 
 def geojson_to_wkt(geojson: dict):
+    """
+    Converts a GeoJson object to a WKT string. This conversion does not support Feature or FeatureCollection conversion
+    geojson: dict
+    returns a string
+    """
     return wkt_converter.geojson_to_wkt(geojson)
 
 
-def geojson_to_esri_json(geojson: dict, wkid: int, id_attribute='OBJECTID'):
-    return geojson_converter.geojson_to_arcgis(geojson=geojson, id_attribute=id_attribute, wkid=wkid)
+def geojson_to_esri_json(geojson: dict, wkid: int, id_attr='OBJECTID'):
+    """
+    Converts a GeoJson object to Esri Json and set the spatial reference to the value of wkid.
+    When converting GeoJson Feature, the id of the feature will be used as the OBJECTID of the Esri Json Feature,
+    unless another fieldname is specified with the id_attribute
+    parameter.
+    geojson: dict
+    wkid: int
+    id_attr: Optional str
+    """
+    return geojson_converter.geojson_to_arcgis(geojson=geojson, id_attr=id_attr, wkid=wkid)
