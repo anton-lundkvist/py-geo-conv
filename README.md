@@ -1,10 +1,9 @@
 # Py-geo-conv
 
-Convert between [ArcGis Json](https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and [GeoJson](https://geojson.org/)
-using pure python (no dependencies)
+Convert between [ArcGis Json](https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and [GeoJson](https://geojson.org/) using python
 
 ## Requirements
-pygeoconv is a pure Python implementation, no dependencies but requires python 3.6 or greater. 
+pygeoconv is a pure Python implementation without dependencies but requires python 3.6 or greater. 
 
 ## Installation
 ```
@@ -61,7 +60,7 @@ wkt = pygeoconv.geojson_to_wkt(geojson)
 ```
 
 ### GeoJSON -> Esri JSON
-Esri Json format (unlike WKT and GeoJson) requires the spatial reference to be specified on the geometry object. Use the wkid parameter to define which spatial reference system should be used, default is 4326.
+Esri Json format (unlike WKT and GeoJson) requires the spatial reference to be specified on the geometry object. Use the wkid parameter to define which spatial reference system should be used, default is EPSG:4326.
 ```
 import pygeoconv
 
