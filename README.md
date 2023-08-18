@@ -1,9 +1,9 @@
-# Py-geo-conv
+# Pygeoconv
 
 Convert between [ArcGis Json](https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and [GeoJson](https://geojson.org/) using python
 
 ## Requirements
-pygeoconv is a pure Python implementation without dependencies but requires python 3.6 or greater. 
+pygeoconv is a pure Python implementation without dependencies, it only requires python 3.6 or greater to run. 
 
 ## Installation
 ```
