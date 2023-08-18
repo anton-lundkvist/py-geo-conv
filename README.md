@@ -114,36 +114,31 @@ esri_json = pygeoconv.wkt_to_esri_json(wkt, wkid=3006)
 
 Neither WKT or GeoJson supports defining a spatial reference system at geometry object level.
 
-## Geometry types
+## Conversion matrices
+### WKT to GeoJson or Esri Json
+|               	| Point 	| LineString 	| Polygon 	| MultiPoint 	| MultiLinestring 	| MultiPolygon 	| GeometryCollection 	|
+|---------------	|-------	|------------	|---------	|------------	|-----------------	|--------------	|--------------------	|
+| **GeoJson**   	| Point 	| LineString 	| Polygon 	| MultiPoint 	| MultiLinestring 	| MultiPolygon 	| GeometryCollection 	|
+| **Esri Json** 	| Point 	| Polyline   	| Polygon 	| MultiPoint 	| Polyline        	| Polygon      	| List of geometries 	|
 
-pygeoconv supports the following geometry types for each format:
- ### WKT:
-- Point
-- Linestring
-- Polygon
-- Multipoint
-- MultiLineString
-- MultiPolygon
-- GeometryCollection
+### GeoJson to WKT or Esri Json
+|               	| Point 	| LineString 	| Polygon 	| MultiPoint 	| MultiLinestring 	| MultiPolygon 	| GeometryCollection 	| Feature 	| FeatureCollection 	|
+|---------------	|-------	|------------	|---------	|------------	|-----------------	|--------------	|--------------------	|---------	|-------------------	|
+| **WKT**       	| Point 	| LineString 	| Polygon 	| MultiPoint 	| MultiLinestring 	| MultiPolygon 	| GeometryCollection 	| **      	| **                	|
+| **Esri Json** 	| Point 	| Polyline   	| Polygon 	| MultiPoint 	| Polyline        	| Polygon      	| List of geometries 	| Feature 	| FeatureSet        	|
 
-### GeoJSON:
-- Point
-- Linestring
-- Polygon
-- Multipoint
-- MultiLineString
-- MultiPolygon
-- GeometryCollection
-- Feature
-- FeatureCollection
+** Conversion of GeoJson Feature or FeatureCollection to WKT will throw a ValueError since WKT format has no definition for these object types.
 
-### EsriJSON:
-- Point
-- Polyline
-- Polygon
-- Multipoint
-- Feature (geometry object with attributes)
-- FeatureSet
+### Esri Json to WKT or GeoJson
+|             	| Point 	| Polyline                     	| Polygon                	| MultiPoint 	| Feature 	| FeatureSet        	|
+|-------------	|-------	|------------------------------	|------------------------	|------------	|---------	|-------------------	|
+| **WKT**     	| Point 	| LineString / MultiLineString * 	| Polygon / MultiPolygon * 	| MultiPoint 	| **      	| **                	|
+| **GeoJson** 	| Point 	| LineString / MultiLineString * 	| Polygon / MultiPolygon * 	| MultiPoint 	| Feature 	| FeatureCollection 	|
 
-In Esri standard, LineString and MultiLineString are both defined as Polyline while Polygon and MultiPolygon are defined as Polygon. For more information, see https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm
+\* In Esri standard, LineString and MultiLineString are both described as Polyline with additional number of paths. Polygon and MultiPolygon are described as Polygon with additional number of rings. For more information, see https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm
+
+** Conversion of Esri Json Feature or FeatureSet to WKT will throw a ValueError since WKT format has no definition for these object types.
+
+
+
 
