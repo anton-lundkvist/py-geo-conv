@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  test:
 
     runs-on: windows-latest
     strategy:
@@ -43,7 +43,8 @@ jobs:
         run: python3 -m build --sdist --wheel --outdir dist/
   
   publish:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    needs: test
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
