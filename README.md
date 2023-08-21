@@ -136,7 +136,7 @@ Neither WKT or GeoJson supports defining a spatial reference system at geometry 
 | **WKT**     	| Point 	| LineString / MultiLineString * 	| Polygon / MultiPolygon * 	| MultiPoint 	| **      	| **                	|
 | **GeoJson** 	| Point 	| LineString / MultiLineString * 	| Polygon / MultiPolygon * 	| MultiPoint 	| Feature 	| FeatureCollection 	|
 
-\* In Esri standard, LineString and MultiLineString are both described as Polyline with additional number of paths. Polygon and MultiPolygon are described as Polygon with additional number of rings. For more information, see https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm
+\* In Esri standard, MultiLineString is described as Polyline with additional number of paths. MultiPolygon is described as Polygon with additional number of rings. For more information, see https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm
 
 ** Conversion of Esri Json Feature or FeatureSet to WKT will throw a ValueError since WKT format has no definition for these object types.
 
