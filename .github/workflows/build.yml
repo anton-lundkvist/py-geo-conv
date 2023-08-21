@@ -39,8 +39,6 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
-      - name: Build a binary wheel and a source tarball
-        run: python3 -m build --sdist --wheel --outdir dist/
   
   publish:
     runs-on: ubuntu-latest
