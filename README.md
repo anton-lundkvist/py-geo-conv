@@ -1,6 +1,8 @@
 # Pygeoconv
 
-Convert between [ArcGis Json](https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and [GeoJson](https://geojson.org/) using python
+Convert between [ArcGis Json](https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and [GeoJson](https://geojson.org/) using python.
+
+This tool is heavily inspired by the [terraformer-js](https://github.com/terraformer-js/terraformer) library. See more in the [Aknowledgments section](#aknowledgments).
 
 ## Requirements
 pygeoconv is a pure Python implementation without dependencies, it only requires python 3.6 or greater to run. 
@@ -113,7 +115,7 @@ esri_json = pygeoconv.wkt_to_esri_json(wkt, wkid=3006)
 
 Neither WKT or GeoJson supports defining a spatial reference system at geometry object level.
 
-## Conversion matrices
+# Conversion matrices
 ### WKT to GeoJson or Esri Json
 |               	| Point 	| LineString 	| Polygon 	| MultiPoint 	| MultiLinestring 	| MultiPolygon 	| GeometryCollection 	|
 |---------------	|-------	|------------	|---------	|------------	|-----------------	|--------------	|--------------------	|
@@ -138,6 +140,8 @@ Neither WKT or GeoJson supports defining a spatial reference system at geometry 
 
 ** Conversion of Esri Json Feature or FeatureSet to WKT will throw a ValueError since WKT format has no definition for these object types.
 
+# Aknowledgments
+This tool is heavily inspired by [terraformer-js](https://github.com/terraformer-js/terraformer), "A geographic toolkit for dealing with geometry, geography, formats, and building geodatabases" written in javascript.
 
-
+[PLY](https://github.com/dabeaz/ply) is used for parsing WKT text based format into python dictionaries. Thanks for this awesome Python package David Beazley!
 
