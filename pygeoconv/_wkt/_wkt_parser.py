@@ -1,4 +1,4 @@
-from pygeoconv.errors import WktParserException
+from pygeoconv.errors import WktParserError
 from pygeoconv._ply.lex import lex
 from pygeoconv._ply.yacc import yacc
 
@@ -400,4 +400,4 @@ def wkt_to_geojson(wkt: str) -> dict:
         parsed = wkt_parser.parse(wkt)
         return parsed
     except Exception as e:
-        raise WktParserException(f"Unable to parse WKT string: {e}")
+        raise WktParserError(f"Unable to parse WKT string: {e}")

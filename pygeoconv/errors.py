@@ -1,10 +1,10 @@
-class WktParserException(Exception):
+class WktParserError(Exception):
     pass
 
 
-class GeojsonParserException(Exception):
+class GeojsonParserError(Exception):
     pass
 
 
-class EsriJsonParserException(Exception):
+class EsriJsonParserError(Exception):
     pass

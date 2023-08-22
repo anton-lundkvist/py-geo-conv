@@ -1,4 +1,4 @@
-from pygeoconv.errors import EsriJsonParserException
+from pygeoconv.errors import EsriJsonParserError
 
 
 def esri_json_to_geojson(arcgis: dict, id_attribute=None):
@@ -18,7 +18,7 @@ def esri_json_to_geojson(arcgis: dict, id_attribute=None):
     elif 'rings' in arcgis:
         geojson = _convert_polygon(arcgis['rings'][:])
 
-    elif all(key in arcgis and isinstance(arcgis[key], (int, float)) for key in ['xmin', 'ymin', 'xmax', 'ymax']):
+    elif all(key in arcgis for key in ['xmin', 'ymin', 'xmax', 'ymax']):
         geojson = _convert_extent(arcgis)
 
     elif 'geometry' in arcgis or 'attributes' in arcgis:
@@ -27,7 +27,7 @@ def esri_json_to_geojson(arcgis: dict, id_attribute=None):
     if geojson.get('geometry') == {}:
         geojson.update({"geometry": None})
     if not geojson:
-        raise EsriJsonParserException("Unable to parse Esri Json object, unknown object type")
+        raise EsriJsonParserError("Unable to parse Esri Json object, unknown object type")
     return geojson
 
 
@@ -51,8 +51,10 @@ def _convert_feature(arcgis: dict, id_attribute):
 
 
 def convert_point(arcgis: dict):
+    if arcgis.get("x") == "NaN" or arcgis.get("x") is None:
+        return {'type': 'Point', 'coordinates': []}
     if not isinstance(arcgis.get('x'), (int, float)) and not isinstance(arcgis.get('y'), (int, float)):
-        raise EsriJsonParserException(f"Invalid coordinates for type point, {arcgis.get('x'), arcgis.get('y')}")
+        raise EsriJsonParserError(f"Invalid coordinates for type point, {arcgis.get('x'), arcgis.get('y')}")
     geojson = {'type': 'Point', 'coordinates': [arcgis['x'], arcgis['y']]}
     if isinstance(arcgis.get('z'), (int, float)):
         geojson['coordinates'].append(arcgis['z'])
@@ -130,6 +132,10 @@ def _convert_polygon(rings: list):
 
 
 def _convert_extent(arcgis: dict):
+    if arcgis.get("xmin") is None or arcgis.get("xmin") == "NaN":
+        return {'type': 'Polygon', 'coordinates': []}
+    if not all(isinstance(arcgis[key], (int, float)) for key in ['xmin', 'ymin', 'xmax', 'ymax']):
+        raise EsriJsonParserError("Invalid coordinates for type Extent")
     geojson = {'type': 'Polygon', 'coordinates': [[
         [arcgis['xmax'], arcgis['ymax']],
         [arcgis['xmin'], arcgis['ymax']],

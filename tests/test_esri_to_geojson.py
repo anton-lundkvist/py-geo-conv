@@ -1,7 +1,7 @@
 import json
 import unittest
 import pygeoconv
-from pygeoconv.errors import EsriJsonParserException
+from pygeoconv.errors import EsriJsonParserError
 
 
 class TestEsrijsonToGeojson(unittest.TestCase):
@@ -46,7 +46,7 @@ class TestEsrijsonToGeojson(unittest.TestCase):
 
         self.assertEqual(output.get("coordinates"), [0, 0])
 
-    def test_nan_coordinates_raises_exception(self):
+    def test_nan_coordinates(self):
         inp = {
             "geometry": {
                 "x": 'NaN',
@@ -56,8 +56,9 @@ class TestEsrijsonToGeojson(unittest.TestCase):
                 "foo": 'bar'
             }
         }
-        with self.assertRaises(EsriJsonParserException):
-            output = pygeoconv.esri_json_to_geojson(inp)
+        output = pygeoconv.esri_json_to_geojson(inp)
+        self.assertEqual(output.get("properties").get("foo"), 'bar')
+        self.assertEqual(output.get("geometry").get("coordinates"), [])
 
     def test_polyline(self):
         inp = {
@@ -843,9 +844,25 @@ class TestEsrijsonToGeojson(unittest.TestCase):
              [-35.5078125, 54.36775852406841], [-35.5078125, 41.244772343082076]]])
         self.assertEqual(output.get("type"), 'Polygon')
 
-    # def test_unknown_object(self):
-    #     inp = {
-    #         "someAttr":None
-    #     }
-    #     with self.assertRaises(EsriJsonParserException):
-    #         pygeoconv.esri_json_to_geojson(inp)
+    def test_extent_empty(self):
+        inp = {
+            "xmax": "NaN",
+            "ymax": "NaN",
+            "xmin": "NaN",
+            "ymin": "NaN",
+            "spatialReference": {
+                "wkid": 4326
+            }
+        }
+
+        output = pygeoconv.esri_json_to_geojson(inp)
+
+        self.assertEqual(output.get("coordinates"), [])
+        self.assertEqual(output.get("type"), 'Polygon')
+
+    def test_unknown_object(self):
+        inp = {
+            "someAttr": None
+        }
+        with self.assertRaises(EsriJsonParserError):
+            pygeoconv.esri_json_to_geojson(inp)

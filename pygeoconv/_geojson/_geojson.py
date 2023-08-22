@@ -1,13 +1,14 @@
-from pygeoconv.errors import GeojsonParserException
+from pygeoconv.errors import GeojsonParserError
 
 
 def geojson_to_arcgis(geojson, id_attr='OBJECTID', wkid: int = 4326):
     result = {}
     geojson_type = geojson.get("type")
     if not geojson_type or geojson_type not in (
-    'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'Feature', 'FeatureCollection',
-    'GeometryCollection'):
-        raise GeojsonParserException("Unable to parse Geojson geometry, unknown geometry type")
+            'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'Feature',
+            'FeatureCollection',
+            'GeometryCollection'):
+        raise GeojsonParserError(f"Unable to parse Geojson, unknown object type {geojson}")
     try:
         if geojson_type == 'Point':
             result = _convert_point(geojson, wkid)
@@ -29,7 +30,7 @@ def geojson_to_arcgis(geojson, id_attr='OBJECTID', wkid: int = 4326):
             result = _convert_geometry_collection(geojson, id_attr, wkid)
         return result
     except Exception as e:
-        raise GeojsonParserException(f"Unable to parse Geojson geometry: {e}")
+        raise GeojsonParserError(f"Unable to parse Geojson: {e}")
 
 
 def _convert_point(geojson: dict, wkid: int):

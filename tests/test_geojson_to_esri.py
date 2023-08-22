@@ -765,21 +765,21 @@ class TestGeojsonToEsri(unittest.TestCase):
         geojson = {
             "type": "unknown", "geometry": {}
         }
-        with self.assertRaises(errors.GeojsonParserException):
+        with self.assertRaises(errors.GeojsonParserError):
             pygeoconv.geojson_to_esri_json(geojson, wkid=4326)
 
     def test_no_type(self):
         geojson = {
             "noType": "", "geometry": {}
         }
-        with self.assertRaises(errors.GeojsonParserException):
+        with self.assertRaises(errors.GeojsonParserError):
             pygeoconv.geojson_to_esri_json(geojson, wkid=4326)
 
     def test_no_geometry(self):
         geojson = {
             "type": "Point"
         }
-        with self.assertRaises(errors.GeojsonParserException):
+        with self.assertRaises(errors.GeojsonParserError):
             pygeoconv.geojson_to_esri_json(geojson, wkid=4326)
 
     def test_should_not_modify_original_object(self):
