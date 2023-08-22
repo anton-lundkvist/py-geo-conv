@@ -1,60 +1,80 @@
+from pygeoconv.errors import EsriJsonParserException
+
+
 def esri_json_to_geojson(arcgis: dict, id_attribute=None):
-    geojson = {}
-
+    geojson = dict()
     if 'features' in arcgis:
-        geojson['type'] = 'FeatureCollection'
-        geojson['features'] = []
-        for feature in arcgis['features']:
-            geojson['features'].append(esri_json_to_geojson(feature, id_attribute))
+        geojson = _convert_feature_set(arcgis, id_attribute)
 
-    if isinstance(arcgis.get('x'), (int, float)) and isinstance(arcgis.get('y'), (int, float)):
-        geojson['type'] = 'Point'
-        geojson['coordinates'] = [arcgis['x'], arcgis['y']]
-        if isinstance(arcgis.get('z'), (int, float)):
-            geojson['coordinates'].append(arcgis['z'])
+    elif "x" in arcgis and "y" in arcgis:
+        geojson = convert_point(arcgis)
 
-    if 'points' in arcgis:
-        geojson['type'] = 'MultiPoint'
-        geojson['coordinates'] = arcgis['points'][:]
+    elif 'points' in arcgis:
+        geojson = _convert_multipoint(arcgis)
 
-    if 'paths' in arcgis:
-        if len(arcgis['paths']) == 1:
-            geojson['type'] = 'LineString'
-            geojson['coordinates'] = arcgis['paths'][0][:]
-        else:
-            geojson['type'] = 'MultiLineString'
-            geojson['coordinates'] = arcgis['paths'][:]
+    elif 'paths' in arcgis:
+        geojson = _convert_polyline(arcgis)
 
-    if 'rings' in arcgis:
-        geojson = _convert_rings_to_geojson(arcgis['rings'][:])
+    elif 'rings' in arcgis:
+        geojson = _convert_polygon(arcgis['rings'][:])
 
-    if all(key in arcgis and isinstance(arcgis[key], (int, float)) for key in ['xmin', 'ymin', 'xmax', 'ymax']):
-        geojson['type'] = 'Polygon'
-        geojson['coordinates'] = [[
-            [arcgis['xmax'], arcgis['ymax']],
-            [arcgis['xmin'], arcgis['ymax']],
-            [arcgis['xmin'], arcgis['ymin']],
-            [arcgis['xmax'], arcgis['ymin']],
-            [arcgis['xmax'], arcgis['ymax']]
-        ]]
+    elif all(key in arcgis and isinstance(arcgis[key], (int, float)) for key in ['xmin', 'ymin', 'xmax', 'ymax']):
+        geojson = _convert_extent(arcgis)
 
-    if 'geometry' in arcgis or 'attributes' in arcgis:
-        geojson['type'] = 'Feature'
-        geojson['geometry'] = esri_json_to_geojson(arcgis['geometry']) if 'geometry' in arcgis else None
-        geojson['properties'] = arcgis['attributes'].copy() if 'attributes' in arcgis else {}
-        if 'attributes' in arcgis:
-            try:
-                geojson['id'] = _get_id(arcgis['attributes'], id_attribute)
-            except ValueError:
-                pass
+    elif 'geometry' in arcgis or 'attributes' in arcgis:
+        geojson = _convert_feature(arcgis, id_attribute)
 
     if geojson.get('geometry') == {}:
-        geojson['geometry'] = None
-
+        geojson.update({"geometry": None})
+    if not geojson:
+        raise EsriJsonParserException("Unable to parse Esri Json object, unknown object type")
     return geojson
 
 
-def _convert_rings_to_geojson(rings: list):
+def _convert_feature_set(arcgis: dict, id_attribute: str):
+    geojson = {'type': 'FeatureCollection', 'features': []}
+    for feature in arcgis['features']:
+        geojson['features'].append(esri_json_to_geojson(feature, id_attribute))
+    return geojson
+
+
+def _convert_feature(arcgis: dict, id_attribute):
+    geojson = {'type': 'Feature',
+               'geometry': esri_json_to_geojson(arcgis['geometry']) if 'geometry' in arcgis else None,
+               'properties': arcgis['attributes'].copy() if 'attributes' in arcgis else {}}
+    if 'attributes' in arcgis:
+        try:
+            geojson['id'] = _get_id(arcgis['attributes'], id_attribute)
+        except ValueError:
+            pass
+    return geojson
+
+
+def convert_point(arcgis: dict):
+    if not isinstance(arcgis.get('x'), (int, float)) and not isinstance(arcgis.get('y'), (int, float)):
+        raise EsriJsonParserException(f"Invalid coordinates for type point, {arcgis.get('x'), arcgis.get('y')}")
+    geojson = {'type': 'Point', 'coordinates': [arcgis['x'], arcgis['y']]}
+    if isinstance(arcgis.get('z'), (int, float)):
+        geojson['coordinates'].append(arcgis['z'])
+    return geojson
+
+
+def _convert_multipoint(arcgis: dict):
+    return {'type': 'MultiPoint', 'coordinates': arcgis['points'][:]}
+
+
+def _convert_polyline(arcgis: dict):
+    geojson = {}
+    if len(arcgis['paths']) == 1:
+        geojson['type'] = 'LineString'
+        geojson['coordinates'] = arcgis['paths'][0][:]
+    else:
+        geojson['type'] = 'MultiLineString'
+        geojson['coordinates'] = arcgis['paths'][:]
+    return geojson
+
+
+def _convert_polygon(rings: list):
     outer_rings = []
     holes = []
     x = 0
@@ -107,6 +127,17 @@ def _convert_rings_to_geojson(rings: list):
             'type': 'MultiPolygon',
             'coordinates': outer_rings
         }
+
+
+def _convert_extent(arcgis: dict):
+    geojson = {'type': 'Polygon', 'coordinates': [[
+        [arcgis['xmax'], arcgis['ymax']],
+        [arcgis['xmin'], arcgis['ymax']],
+        [arcgis['xmin'], arcgis['ymin']],
+        [arcgis['xmax'], arcgis['ymin']],
+        [arcgis['xmax'], arcgis['ymax']]
+    ]]}
+    return geojson
 
 
 def _get_id(attributes: dict, id_attribute: str):

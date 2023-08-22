@@ -1,6 +1,6 @@
-import pygeoconv._wkt as wkt_converter
-import pygeoconv._geojson as geojson_converter
-import pygeoconv._esri_json as esri_converter
+import pygeoconv._wkt as _wkt_converter
+import pygeoconv._geojson as _geojson_converter
+import pygeoconv._esri_json as _esri_converter
 
 
 def wkt_to_esri_json(wkt: str, wkid: int):
@@ -10,8 +10,8 @@ def wkt_to_esri_json(wkt: str, wkid: int):
     wkid: int
     returns a dict
     """
-    geojson = wkt_converter.wkt_to_geojson(wkt)
-    arcgis = geojson_converter.geojson_to_arcgis(geojson=geojson, wkid=wkid)
+    geojson = _wkt_converter.wkt_to_geojson(wkt)
+    arcgis = _geojson_converter.geojson_to_arcgis(geojson=geojson, wkid=wkid)
     return arcgis
 
 
@@ -21,7 +21,7 @@ def wkt_to_geojson(wkt_str: str):
     wkt: str
     returns a dict
     """
-    return wkt_converter.wkt_to_geojson(wkt_str)
+    return _wkt_converter.wkt_to_geojson(wkt_str)
 
 
 def esri_json_to_wkt(esri_json: dict):
@@ -30,8 +30,8 @@ def esri_json_to_wkt(esri_json: dict):
     esri_json: dict
     returns a string
     """
-    geojson = esri_converter.esri_json_to_geojson(esri_json)
-    wkt = wkt_converter.geojson_to_wkt(geojson)
+    geojson = _esri_converter.esri_json_to_geojson(esri_json)
+    wkt = _wkt_converter.geojson_to_wkt(geojson)
     return wkt
 
 
@@ -45,7 +45,7 @@ def esri_json_to_geojson(esri_json: dict, id_attr=None):
     id_attr: Optional str
     returns a dict
     """
-    return esri_converter.esri_json_to_geojson(esri_json, id_attribute=id_attr)
+    return _esri_converter.esri_json_to_geojson(esri_json, id_attribute=id_attr)
 
 
 def geojson_to_wkt(geojson: dict):
@@ -54,7 +54,7 @@ def geojson_to_wkt(geojson: dict):
     geojson: dict
     returns a string
     """
-    return wkt_converter.geojson_to_wkt(geojson)
+    return _wkt_converter.geojson_to_wkt(geojson)
 
 
 def geojson_to_esri_json(geojson: dict, wkid: int, id_attr='OBJECTID'):
@@ -67,4 +67,4 @@ def geojson_to_esri_json(geojson: dict, wkid: int, id_attr='OBJECTID'):
     wkid: int
     id_attr: Optional str
     """
-    return geojson_converter.geojson_to_arcgis(geojson=geojson, id_attr=id_attr, wkid=wkid)
+    return _geojson_converter.geojson_to_arcgis(geojson=geojson, id_attr=id_attr, wkid=wkid)

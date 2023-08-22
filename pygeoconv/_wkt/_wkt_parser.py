@@ -1,3 +1,4 @@
+from pygeoconv.errors import WktParserException
 from pygeoconv._ply.lex import lex
 from pygeoconv._ply.yacc import yacc
 
@@ -6,7 +7,6 @@ tokens = (
     'LPAREN',
     'RPAREN',
     'DOUBLE_TOK',
-    # 'INTEGER_TOK',
     'POINT',
     'LINESTRING',
     'POLYGON',
@@ -36,27 +36,14 @@ def t_RPAREN(t):
     return t
 
 
-# def t_INTEGER_TOK(t):
-#     # r'^[-+]?[0-9]+$'
-#     r'(?<!\.)\b[0-9]+\b(?!\.)'
-#     t.value = int(t.value)
-#     return t
-
 
 def t_DOUBLE_TOK(t):
     r'-?[0-9]+(\.[0-9]+)?([eE][\-\+]?[0-9]+)?'
-    # r'[+-]?[0-9]+\.[0-9]+'
-    # r'-?[0-9]+(\.[0-9]+)([eE][\-\+]?[0-9]+)?'
     try:
         t.value = int(t.value)
     except:
         t.value = float(t.value)
     return t
-
-
-# def t_INTEGER_TOK(t):
-#     r'^[-+]?[0-9]+$'
-#     t.value = int(t.value)
 
 
 def t_POINT(t):
@@ -127,17 +114,6 @@ def t_error(t):
     print(f"Lexer error: Unexpected character '{t.value[0]}' at line {t.lineno}")
     t.lexer.skip(1)
 
-
-# Parser rules
-# def p_expressions(p):
-#     '''expressions : point EOF
-#                    | linestring EOF
-#                    | polygon EOF
-#                    | multipoint EOF
-#                    | multilinestring EOF
-#                    | multipolygon EOF
-#                    | geometrycollection EOF'''
-#     p[0] = p[1]
 
 def p_expressions(p):
     '''expressions : point
@@ -418,8 +394,10 @@ def p_error(p):
 
 
 def wkt_to_geojson(wkt: str) -> dict:
-    # Build the lexer
-    lexer = lex()
-    # Build the parser
-    wkt_parser = yacc()
-    return wkt_parser.parse(wkt)
+    try:
+        lexer = lex()
+        wkt_parser = yacc()
+        parsed = wkt_parser.parse(wkt)
+        return parsed
+    except Exception as e:
+        raise WktParserException(f"Unable to parse WKT string: {e}")

@@ -1,28 +1,38 @@
+from pygeoconv.errors import GeojsonParserException
+
+
 def geojson_to_arcgis(geojson, id_attr='OBJECTID', wkid: int = 4326):
     result = {}
+    geojson_type = geojson.get("type")
+    if not geojson_type or geojson_type not in (
+    'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'Feature', 'FeatureCollection',
+    'GeometryCollection'):
+        raise GeojsonParserException("Unable to parse Geojson geometry, unknown geometry type")
+    try:
+        if geojson_type == 'Point':
+            result = _convert_point(geojson, wkid)
+        elif geojson_type == 'MultiPoint':
+            result = _convert_multi_point(geojson, wkid)
+        elif geojson_type == 'LineString':
+            result = _convert_linestring(geojson, wkid)
+        elif geojson_type == 'MultiLineString':
+            result = _convert_multi_linestring(geojson, wkid)
+        elif geojson_type == 'Polygon':
+            result = _convert_polygon(geojson, wkid)
+        elif geojson_type == 'MultiPolygon':
+            result = _convert_multi_polygon(geojson, wkid)
+        elif geojson_type == 'Feature':
+            result = _convert_feature(geojson, id_attr, wkid)
+        elif geojson_type == 'FeatureCollection':
+            result = _convert_feature_collection(geojson, id_attr, wkid)
+        elif geojson_type == 'GeometryCollection':
+            result = _convert_geometry_collection(geojson, id_attr, wkid)
+        return result
+    except Exception as e:
+        raise GeojsonParserException(f"Unable to parse Geojson geometry: {e}")
 
-    if geojson['type'] == 'Point':
-        result = parse_point(geojson, wkid)
-    elif geojson['type'] == 'MultiPoint':
-        result = parse_multi_point(geojson, wkid)
-    elif geojson['type'] == 'LineString':
-        result = parse_linestring(geojson, wkid)
-    elif geojson['type'] == 'MultiLineString':
-        result = parse_multi_linestring(geojson, wkid)
-    elif geojson['type'] == 'Polygon':
-        result = parse_polygon(geojson, wkid)
-    elif geojson['type'] == 'MultiPolygon':
-        result = parse_multi_polygon(geojson, wkid)
-    elif geojson['type'] == 'Feature':
-        result = parse_feature(geojson, id_attr, wkid)
-    elif geojson['type'] == 'FeatureCollection':
-        result = parse_feature_collection(geojson, id_attr, wkid)
-    elif geojson['type'] == 'GeometryCollection':
-        result = parse_geometry_collection(geojson, id_attr, wkid)
-    return result
 
-
-def parse_point(geojson: dict, wkid: int):
+def _convert_point(geojson: dict, wkid: int):
     spatial_reference = {'wkid': wkid}
     result = {'x': geojson['coordinates'][0], 'y': geojson['coordinates'][1]}
     if len(geojson['coordinates']) > 2:
@@ -31,7 +41,7 @@ def parse_point(geojson: dict, wkid: int):
     return result
 
 
-def parse_multi_point(geojson: dict, wkid: int):
+def _convert_multi_point(geojson: dict, wkid: int):
     spatial_reference = {'wkid': wkid}
     result = {'points': geojson['coordinates'][:]}
     if len(geojson['coordinates'][0]) > 2:
@@ -40,7 +50,7 @@ def parse_multi_point(geojson: dict, wkid: int):
     return result
 
 
-def parse_linestring(geojson: dict, wkid: int):
+def _convert_linestring(geojson: dict, wkid: int):
     spatial_reference = {'wkid': wkid}
     result = {'paths': [geojson['coordinates'][:]]}
     if len(geojson['coordinates'][0]) > 2:
@@ -49,7 +59,7 @@ def parse_linestring(geojson: dict, wkid: int):
     return result
 
 
-def parse_multi_linestring(geojson: dict, wkid: int):
+def _convert_multi_linestring(geojson: dict, wkid: int):
     spatial_reference = {'wkid': wkid}
     result = {'paths': geojson['coordinates'][:]}
     if len(geojson['coordinates'][0][0]) > 2:
@@ -58,7 +68,7 @@ def parse_multi_linestring(geojson: dict, wkid: int):
     return result
 
 
-def parse_polygon(geojson: dict, wkid: int):
+def _convert_polygon(geojson: dict, wkid: int):
     spatial_reference = {'wkid': wkid}
     result = {'rings': _orient_rings(geojson['coordinates'][:])}
     if len(geojson['coordinates'][0][0]) > 2:
@@ -67,7 +77,7 @@ def parse_polygon(geojson: dict, wkid: int):
     return result
 
 
-def parse_multi_polygon(geojson: dict, wkid: int):
+def _convert_multi_polygon(geojson: dict, wkid: int):
     spatial_reference = {'wkid': wkid}
     result = {'rings': _flatten_multi_polygon_rings(geojson['coordinates'][:])}
     if len(geojson['coordinates'][0][0][0]) > 2:
@@ -76,7 +86,7 @@ def parse_multi_polygon(geojson: dict, wkid: int):
     return result
 
 
-def parse_feature(geojson: dict, id_attribute: str, wkid: int):
+def _convert_feature(geojson: dict, id_attribute: str, wkid: int):
     result = {}
     if geojson.get("geometry"):
         result['geometry'] = geojson_to_arcgis(geojson['geometry'], id_attribute, wkid)
@@ -86,14 +96,14 @@ def parse_feature(geojson: dict, id_attribute: str, wkid: int):
     return result
 
 
-def parse_feature_collection(geojson: dict, id_attribute: str, wkid: int):
+def _convert_feature_collection(geojson: dict, id_attribute: str, wkid: int):
     result = []
     for feature in geojson['features']:
         result.append(geojson_to_arcgis(feature, id_attribute, wkid))
     return result
 
 
-def parse_geometry_collection(geojson: dict, id_attribute: str, wkid: int):
+def _convert_geometry_collection(geojson: dict, id_attribute: str, wkid: int):
     result = []
     for geometry in geojson['geometries']:
         result.append(geojson_to_arcgis(geometry, id_attribute, wkid))
