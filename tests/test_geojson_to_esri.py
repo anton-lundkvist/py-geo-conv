@@ -6,12 +6,12 @@ from pygeoconv import errors
 
 class TestGeojsonToEsri(unittest.TestCase):
     def test_point(self):
-        input = {
+        inp = {
             "type": 'Point',
             "coordinates": [-58.7109375, 47.4609375]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "x": -58.7109375,
@@ -22,12 +22,12 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_point_z(self):
-        input = {
+        inp = {
             "type": 'Point',
             "coordinates": [-58.7109375, 47.4609375, 10]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "x": -58.7109375,
@@ -39,12 +39,12 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_point_z_0(self):
-        input = {
+        inp = {
             "type": 'Point',
             "coordinates": [-58.7109375, 47.4609375, 0]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "x": -58.7109375,
@@ -56,12 +56,12 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_null_point(self):
-        input = {
+        inp = {
             "type": 'Point',
             "coordinates": [0, 0]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "x": 0,
@@ -72,7 +72,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_linestring(self):
-        input = {
+        inp = {
             "type": 'LineString',
             "coordinates": [
                 [21.4453125, -14.0625],
@@ -81,7 +81,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "paths": [
@@ -97,7 +97,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_linestring_z(self):
-        input = {
+        inp = {
             "type": 'LineString',
             "coordinates": [
                 [21.4453125, -14.0625, 10],
@@ -106,7 +106,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "paths": [
@@ -123,7 +123,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_polygon(self):
-        input = {
+        inp = {
             "type": 'Polygon',
             "coordinates": [
                 [
@@ -135,7 +135,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "rings": [
@@ -152,7 +152,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_polygon_z_values(self):
-        input = {
+        inp = {
             "type": 'Polygon',
             "coordinates": [
                 [
@@ -164,7 +164,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "rings": [
@@ -182,7 +182,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_polygon_with_hole_to_polygon_with_two_rings(self):
-        input = {
+        inp = {
             "type": 'Polygon',
             "coordinates": [
                 [
@@ -202,7 +202,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "rings": [
@@ -215,7 +215,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_strip_invalid_rings(self):
-        input = {
+        inp = {
             "type": 'Polygon',
             "coordinates": [
                 [
@@ -233,7 +233,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "rings": [
@@ -245,7 +245,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_closing_polygon_rings(self):
-        input = {
+        inp = {
             "type": 'Polygon',
             "coordinates": [
                 [
@@ -263,7 +263,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "rings": [
@@ -276,7 +276,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_multipoint(self):
-        input = {
+        inp = {
             "type": 'MultiPoint',
             "coordinates": [
                 [41.8359375, 71.015625],
@@ -285,7 +285,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "points": [
@@ -299,7 +299,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_multipoint_z_values(self):
-        input = {
+        inp = {
             "type": 'MultiPoint',
             "coordinates": [
                 [41.8359375, 71.015625, 10],
@@ -308,7 +308,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "points": [
@@ -323,7 +323,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_multilinestring(self):
-        input = {
+        inp = {
             "type": 'MultiLineString',
             "coordinates": [
                 [
@@ -337,7 +337,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "paths": [
@@ -356,7 +356,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_multilinestring_z_values(self):
-        input = {
+        inp = {
             "type": 'MultiLineString',
             "coordinates": [
                 [
@@ -370,7 +370,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "paths": [
@@ -390,7 +390,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_multipolygon_to_arcgis_polygon(self):
-        input = {
+        inp = {
             "type": 'MultiPolygon',
             "coordinates": [
                 [
@@ -402,7 +402,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "rings": [
@@ -415,7 +415,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_multipolygon_z_values(self):
-        input = {
+        inp = {
             "type": 'MultiPolygon',
             "coordinates": [
                 [
@@ -427,7 +427,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "rings": [
@@ -441,7 +441,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_multipolygon_with_holes(self):
-        input = {
+        inp = {
             "type": 'MultiPolygon',
             "coordinates": [
                 [
@@ -454,7 +454,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
         self.assertEqual(output, {
             "spatialReference": {
                 "wkid": 4326
@@ -484,7 +484,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_closing_multipolygon_rings_with_holes(self):
-        input = {
+        inp = {
             "type": 'MultiPolygon',
             "coordinates": [
                 [
@@ -497,7 +497,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             ]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
         self.assertEqual(output, {
             "spatialReference": {
                 "wkid": 4326
@@ -528,7 +528,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_feature(self):
-        input = {
+        inp = {
             "type": 'Feature',
             "id": 'foo',
             "geometry": {
@@ -547,7 +547,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             }
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "geometry": {
@@ -570,7 +570,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_feature_with_custom_id(self):
-        input = {
+        inp = {
             "type": 'Feature',
             "id": 'foo',
             "geometry": {
@@ -587,7 +587,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             }
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, id_attr='myId', wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, id_attr='myId', wkid=4326)
 
         self.assertEqual(output, {
             "geometry": {
@@ -610,14 +610,14 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_feature_with_no_geometry_or_attributes(self):
-        input = {
+        inp = {
             "type": 'Feature',
             "id": 'foo',
             "geometry": None,
             "properties": None
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, {
             "attributes": {
@@ -626,7 +626,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         })
 
     def test_feature_collection_to_array_of_features(self):
-        input = {
+        inp = {
             "type": 'FeatureCollection',
             "features": [{
                 "type": 'Feature',
@@ -669,7 +669,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             }]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, [{
             "geometry": {
@@ -716,7 +716,7 @@ class TestGeojsonToEsri(unittest.TestCase):
         }])
 
     def test_geometry_collection(self):
-        input = {
+        inp = {
             "type": 'GeometryCollection',
             "geometries": [{
                 "type": 'Polygon',
@@ -730,7 +730,7 @@ class TestGeojsonToEsri(unittest.TestCase):
             }]
         }
 
-        output = pygeoconv.geojson_to_esri_json(input, wkid=4326)
+        output = pygeoconv.geojson_to_esri_json(inp, wkid=4326)
 
         self.assertEqual(output, [{
             "rings": [
