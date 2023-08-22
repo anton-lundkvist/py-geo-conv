@@ -1,6 +1,6 @@
-import pygeoconv.wkt as wkt_converter
-import pygeoconv.geojson as geojson_converter
-import pygeoconv.esri_json as esri_converter
+import pygeoconv._wkt as wkt_converter
+import pygeoconv._geojson as geojson_converter
+import pygeoconv._esri_json as esri_converter
 
 
 def wkt_to_esri_json(wkt: str, wkid: int):

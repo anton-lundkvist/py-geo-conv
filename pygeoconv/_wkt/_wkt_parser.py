@@ -1,5 +1,5 @@
-from pygeoconv.ply.lex import lex
-from pygeoconv.ply.yacc import yacc
+from pygeoconv._ply.lex import lex
+from pygeoconv._ply.yacc import yacc
 
 # Lexer tokens
 tokens = (
