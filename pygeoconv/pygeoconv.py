@@ -19,7 +19,7 @@ def wkt_to_esri_json(wkt: str, wkid: int = 4326):
 
 def wkt_to_geojson(wkt_str: str):
     """
-    Convert WKT to GeoJson format
+    Convert WKT to GeoJson format.
     wkt: str
     returns a dict
     """
