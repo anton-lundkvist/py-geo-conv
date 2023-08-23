@@ -1,8 +1,7 @@
-from pygeoconv.errors import WktParserError
-from pygeoconv._ply.lex import lex
-from pygeoconv._ply.yacc import yacc
-
 # Lexer tokens
+from pygeoconv.ply.lex import lex
+from pygeoconv.ply.yacc import yacc
+
 tokens = (
     'LPAREN',
     'RPAREN',
@@ -393,11 +392,5 @@ def p_error(p):
         raise SyntaxError("Syntax error at EOF")
 
 
-def wkt_to_geojson(wkt: str) -> dict:
-    try:
-        lexer = lex()
-        wkt_parser = yacc()
-        parsed = wkt_parser.parse(wkt)
-        return parsed
-    except Exception as e:
-        raise WktParserError(f"Unable to parse WKT string: {e}")
+wkt_lexer = lex()
+wkt_parser = yacc()

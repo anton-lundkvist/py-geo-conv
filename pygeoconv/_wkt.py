@@ -1,3 +1,7 @@
+from pygeoconv._wkt_parser import wkt_parser
+from pygeoconv.errors import WktParserError
+
+
 def _array_to_ring(arr):
     parts = []
     for item in arr:
@@ -56,7 +60,6 @@ def _polygon_to_wkt_polygon(geojson):
     ret += ', '.join(parts)
     ret += ')'
     return ret
-
 
 
 def _multi_point_to_wkt_multi_point(geojson):
@@ -144,3 +147,11 @@ def geojson_to_wkt(geojson):
         return ret + '(' + ', '.join(parts) + ')'
     else:
         raise ValueError('Unknown Type: ' + geojson['type'])
+
+
+def wkt_to_geojson(wkt: str) -> dict:
+    try:
+        parsed = wkt_parser.parse(wkt)
+        return parsed
+    except Exception as e:
+        raise WktParserError(f"Unable to parse WKT string: {e}")
