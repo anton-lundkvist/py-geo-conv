@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pygeoconv",
-    version="1.3.3",
+    version="1.0.0",
     author="Anton Lundkvist",
     author_email="antonlundkvist@gmail.com",
-    description="Pure python tool for converting geometries between WKT, GeoJson and Esri Json formats",
+    description="Python tool for converting geometries between WKT, GeoJson and Esri Json formats",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/anton-lundkvist/py-geo-conv",
