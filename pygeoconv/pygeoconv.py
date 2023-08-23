@@ -58,7 +58,7 @@ def esri_json_to_geojson(esri_json: dict, id_attr=None):
 
 def geojson_to_wkt(geojson: dict):
     """
-    Converts a GeoJson object to a WKT string. This conversion does not support Feature or FeatureCollection conversion
+    Converts a GeoJson object to a WKT string. This conversion does not support Feature or FeatureCollection conversion.
     geojson: dict
     returns a string
     """
