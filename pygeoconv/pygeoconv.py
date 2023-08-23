@@ -3,13 +3,15 @@ import pygeoconv._geojson as _geojson_converter
 import pygeoconv._esri_json as _esri_converter
 
 
-def wkt_to_esri_json(wkt: str, wkid: int):
+def wkt_to_esri_json(wkt: str, wkid: int = 4326):
     """
     Convert WKT to Esri Json format and set the spatial reference to the value of wkid
     wkt: str
     wkid: int
     returns a dict
     """
+    if not wkt:
+        raise TypeError("Unable to convert value None")
     geojson = _wkt_converter.wkt_to_geojson(wkt)
     arcgis = _geojson_converter.geojson_to_arcgis(geojson=geojson, wkid=wkid)
     return arcgis
@@ -21,6 +23,8 @@ def wkt_to_geojson(wkt_str: str):
     wkt: str
     returns a dict
     """
+    if not wkt_str:
+        raise TypeError("Unable to convert value None")
     return _wkt_converter.wkt_to_geojson(wkt_str)
 
 
@@ -30,6 +34,8 @@ def esri_json_to_wkt(esri_json: dict):
     esri_json: dict
     returns a string
     """
+    if not esri_json:
+        raise TypeError("Unable to convert value None")
     geojson = _esri_converter.esri_json_to_geojson(esri_json)
     wkt = _wkt_converter.geojson_to_wkt(geojson)
     return wkt
@@ -45,6 +51,8 @@ def esri_json_to_geojson(esri_json: dict, id_attr=None):
     id_attr: Optional str
     returns a dict
     """
+    if not esri_json:
+        raise TypeError("Unable to convert value None")
     return _esri_converter.esri_json_to_geojson(esri_json, id_attribute=id_attr)
 
 
@@ -54,17 +62,21 @@ def geojson_to_wkt(geojson: dict):
     geojson: dict
     returns a string
     """
+    if not geojson:
+        raise TypeError("Unable to convert value None")
     return _wkt_converter.geojson_to_wkt(geojson)
 
 
-def geojson_to_esri_json(geojson: dict, wkid: int, id_attr='OBJECTID'):
+def geojson_to_esri_json(geojson: dict, wkid: int = 4326, id_attr: str = 'OBJECTID'):
     """
     Converts a GeoJson object to Esri Json and set the spatial reference to the value of wkid.
     When converting GeoJson Feature, the id of the feature will be used as the OBJECTID of the Esri Json Feature,
-    unless another fieldname is specified with the id_attribute
+    unless another field name is specified with the id_attribute
     parameter.
     geojson: dict
     wkid: int
     id_attr: Optional str
     """
+    if not geojson:
+        raise TypeError("Unable to convert value None")
     return _geojson_converter.geojson_to_arcgis(geojson=geojson, id_attr=id_attr, wkid=wkid)
