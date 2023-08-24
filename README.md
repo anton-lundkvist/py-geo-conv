@@ -2,7 +2,7 @@
 
 Convert between [ArcGis Json](https://developers.arcgis.com/documentation/common-data-types/geometry-objects.htm) , [WKT](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) and [GeoJson](https://geojson.org/) using python.
 
-This tool is heavily inspired by the [terraformer-js](https://github.com/terraformer-js/terraformer) library. See more in the [Aknowledgments section](#aknowledgments).
+This tool is inspired by the [terraformer-js](https://github.com/terraformer-js/terraformer) library. See more in the [Aknowledgments section](#aknowledgments).
 
 ## Requirements
 pygeoconv is a pure Python implementation without dependencies, it only requires python 3.6 or greater to run. 
@@ -30,7 +30,7 @@ esri_geom = pygeoconv.wkt_to_esri_json(wkt_geom)
 
 
 
-### WKT -> GeoJson
+### WKT to GeoJson
 ```
 import pygeoconv
 
@@ -38,7 +38,7 @@ wkt = """LINESTRING (495802.21253339015 6677525.294995224, 495161.84831775713 66
 
 geojson = pygeoconv.wkt_to_geojson(wkt)
 ```
-### WKT -> Esri Json
+### WKT to Esri Json
 
 Esri Json format (unlike WKT and GeoJson) requires the spatial reference to be specified on the geometry object. Use the wkid parameter to define which spatial reference system should be used, default is 4326.
 
@@ -46,7 +46,7 @@ Esri Json format (unlike WKT and GeoJson) requires the spatial reference to be s
 esri_json = pygeoconv.wkt_to_esri_json(wkt, wkid=3006)
 ```
 
-### GeoJson -> WKT
+### GeoJson to WKT
 ```
 import pygeoconv
 
@@ -61,7 +61,7 @@ geojson = {
 wkt = pygeoconv.geojson_to_wkt(geojson)
 ```
 
-### GeoJSON -> Esri JSON
+### GeoJson to Esri Json
 Esri Json format (unlike WKT and GeoJson) requires the spatial reference to be specified on the geometry object. Use the wkid parameter to define which spatial reference system should be used, default is EPSG:4326.
 ```
 import pygeoconv
@@ -76,7 +76,7 @@ geojson = {
 esri_json = pygeoconv.geojson_to_esri_json(geojson, wkid=3006)
 ```
 
-### Esri Json -> WKT
+### Esri Json to WKT
 ```
 import pygeoconv
 
@@ -88,10 +88,10 @@ esri_json = {
       }
     }
 
-wkt = converter.esri_json_to_wkt(esri_json)
+wkt = pygeoconv.esri_json_to_wkt(esri_json)
 ```
 
-### Esri JSON -> GeoJSON
+### Esri Json to GeoJSON
 ```
 import pygeoconv
 
@@ -102,7 +102,7 @@ esri_json = {
         "wkid": 3006
       }
     }
-esri_json = converter.esrijson_to_geojson(esri_json)
+esri_json = pygeoconv.esrijson_to_geojson(esri_json)
 ```
 
 ## Spatial reference system
